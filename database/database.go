@@ -3,8 +3,6 @@ package database
 import (
     "gorm.io/gorm"
     "gorm.io/driver/postgres"
-    "github.com/rezaakbar35/golang-crud-api/model"
-    "github.com/rezaakbar35/golang-crud-api/database/migration"
 )
 
 func ConnectDB() *gorm.DB {
@@ -18,9 +16,13 @@ func ConnectDB() *gorm.DB {
 }
 
 func RunMigrations(db *gorm.DB) {
-    migration.Migrate(db)
+    // No need to pass `db` to `migration.Migrate` function
+    // It's already connected
+    migration.Migrate()
 }
 
 func RollbackMigrations(db *gorm.DB) {
-    migration.Rollback(db)
+    // No need to pass `db` to `migration.Rollback` function
+    // It's already connected
+    migration.Rollback()
 }
