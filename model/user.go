@@ -9,5 +9,5 @@ type User struct {
 	Username 	string 		`json:"username"`
 	Email 		string 		`json:"email"`
 	Password 	string 		`json:"password"`
-	Photos 		[]Photo 	`json:"photos"`
+	Photos 		[]Photo 	`json:"photos" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }

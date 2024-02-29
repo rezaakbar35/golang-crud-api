@@ -6,10 +6,8 @@ import (
 
 type Photo struct{
 	gorm.Model
-	Id 			uint 		`gorm:"primaryKey" json:"id"`
-	Title 		string 		`json:"photoUrl"`
-	Caption 	string 	 	`json:"createdAt"`
-	photoUrl 	string	 	`json:"updatedAt"`
-	UserId 		uint 		`json:"userId"`
-	User 		User 		`json:"user"`
+	Title 		string 		`json:"title"`
+	Caption 	string 	 	`json:"caption"`
+	photoUrl 	string	 	`json:"photoUrl"`
+	UserId 		int 		`gorm:"foreignKey:UserID;references:ID"`
 }
