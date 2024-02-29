@@ -10,7 +10,7 @@ import (
 
 func main() {
 	r := gin.Default()
-	models.ConnectDB()
+	model.ConnectDB()
 
 	r.GET("/api/users", userController.GetAllUser)
 	r.GET("/api/users/:id", userController.GetUserById)
