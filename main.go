@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/rezaakbar35/final-task/controller/userController"
+	"github.com/rezaakbar35/golang-crud-api/controller/userController"
 
-	"github.com/rezaakbar35/final-task/model"
+	"github.com/rezaakbar35/golang-crud-api/model"
 
 	"github.com/gin-gonic/gin"
 )
