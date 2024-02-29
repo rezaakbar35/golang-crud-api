@@ -4,13 +4,16 @@ import (
 	"github.com/rezaakbar35/golang-crud-api/controller/userController"
 	"github.com/rezaakbar35/golang-crud-api/controller/photoController"
 	"github.com/rezaakbar35/golang-crud-api/model"
-
+	"github.com/rezaakbar35/golang-crud-api/database"
+    "github.com/rezaakbar35/golang-crud-api/database/migration"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	r := gin.Default()
-	model.ConnectDB()
+	db := database.ConnectDB()
+    database.RunMigrations(db)
+    defer db.Close()
 
 	r.GET("/api/users", userController.GetAllUser)
 	r.GET("/api/users/:id", userController.GetUserById)
