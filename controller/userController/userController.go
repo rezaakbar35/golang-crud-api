@@ -10,15 +10,20 @@ import (
 func GetAllUser(c *gin.Context){
 	var users []model.User
 
-	model.DB.Find(&users)
-	c.JSON(http.StatusOK, gin.H{"user": users})
+	if err := model.DB.Preload("Photos").Find(&users).Error; err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"users": users})
 }
+
 
 func GetUserById(c *gin.Context){
 	var user model.User
 	id := c.Param("id")
 
-	if err := model.DB.First(&user, id).Error; err != nil {
+	if err := model.DB.Preload("Photos").First(&user, id).Error; err != nil {
 		switch err {
 		case gorm.ErrRecordNotFound:
 			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "User not found!"})
