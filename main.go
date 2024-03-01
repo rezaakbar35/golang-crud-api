@@ -1,28 +1,33 @@
 package main
 
 import (
-    "github.com/rezaakbar35/golang-crud-api/controller/userController"
-    "github.com/rezaakbar35/golang-crud-api/controller/photoController"
-    "github.com/rezaakbar35/golang-crud-api/model"
-
-    "github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
+	"github.com/rezaakbar35/golang-crud-api/controller/photoController"
+	"github.com/rezaakbar35/golang-crud-api/controller/userController"
+	"github.com/rezaakbar35/golang-crud-api/helper"
+	"github.com/rezaakbar35/golang-crud-api/model"
 )
 
+func init() {
+	helper.LoadEnv()
+	model.ConnectDB()
+}
+
 func main() {
-    r := gin.Default()
-    model.ConnectDB()
+	r := gin.Default()
 
-    r.GET("/api/users", userController.GetAllUser)
-    r.GET("/api/users/:id", userController.GetUserById)
-    r.POST("/api/users", userController.CreateUser)
-    r.PUT("/api/users/:id", userController.UpdateUser)
-    r.DELETE("/api/users/:id", userController.DeleteUser)
+	r.GET("/api/users", userController.GetAllUser)
+	r.GET("/api/users/:id", userController.GetUserById)
+	r.POST("/api/users/register", userController.Register)
+	r.POST("/api/users/login", userController.Login)
+	r.PUT("/api/users/:id", userController.UpdateUser)
+	r.DELETE("/api/users/:id", userController.DeleteUser)
 
-    r.GET("/api/photos", photoController.GetAllPhoto)
-    r.GET("/api/photos/:id", photoController.GetPhotoById)
-    r.POST("/api/photos", photoController.CreatePhoto)
-    r.PUT("/api/photos/:id", photoController.UpdatePhoto)
-    r.DELETE("/api/photos/:id", photoController.DeletePhoto)
+	r.GET("/api/photos", helper.Auth, photoController.GetAllPhoto)
+	r.GET("/api/photos/:id", helper.Auth, photoController.GetPhotoById)
+	r.POST("/api/photos", helper.Auth, photoController.CreatePhoto)
+	r.PUT("/api/photos/:id", helper.Auth, photoController.UpdatePhoto)
+	r.DELETE("/api/photos/:id", helper.Auth, photoController.DeletePhoto)
 
-    r.Run()
+	r.Run()
 }
