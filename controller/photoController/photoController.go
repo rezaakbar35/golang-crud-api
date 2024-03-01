@@ -46,7 +46,7 @@ func CreatePhoto(c *gin.Context) {
 		return
 	}
 
-	userID, ok := user_id.(int)
+	userID, ok := user_id.(uint)
 	if !ok {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Invalid user ID"})
 		return
@@ -83,7 +83,7 @@ func UpdatePhoto(c *gin.Context) {
 		return
 	}
 
-	userID, ok := user_id.(int)
+	userID, ok := user_id.(uint)
 	if !ok {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Invalid user ID"})
 		return
